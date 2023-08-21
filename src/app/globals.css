@@ -1,0 +1,16 @@
+:root {
+  --mobile-width: 500px;
+}
+body {
+  max-width: 500px;
+  width: var(--mobile-width);
+  margin: 0;
+}
+
+main {
+  overflow-x: hidden;
+}
+
+.carousel .control-dots {
+  top: 10px;
+}
