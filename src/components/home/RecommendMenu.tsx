@@ -10,7 +10,7 @@ const CUSTOMIZE_LIST_LENGTH = 9;
 const NEWARRIVAL_LIST_LENGTH = 20;
 const BESTSELLER_LIST_LENGTH = 20;
 const DAILY_LIST_LENGTH = 24;
-const FOOD_LIST_LENGTH = 6;
+const FOOD_LIST_LENGTH = 17;
 
 const RefetchButton = styled.button`
   border: 1px solid green;
@@ -62,7 +62,7 @@ export function RecommendMenu() {
         type="row"
       />
       <DisplayRecommend title="지금 뭐 먹지?" products={foodList} type="grid" />
-      <RefetchButton onClick={getFood}>지금 뭐 먹지?</RefetchButton>
+      {/* <RefetchButton onClick={getFood}>지금 뭐 먹지?</RefetchButton> */}
 
       <DisplayRecommend
         title="지금 필요한 생필품"
