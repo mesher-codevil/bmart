@@ -1,4 +1,4 @@
-import { CategoryPageType, Product } from '@/@types';
+import { CategoryPage } from "@/types";
 
 export type responseMainBanner = {
   imgSrc: string;
@@ -9,12 +9,4 @@ export type responsePromotionBanner = {
   alt: string;
 }[];
 
-export type responseCustomizeRecommend = Product[];
-export type responseNewArrivalRecommend = Product[];
-export type responseBestSellerRecommend = Product[];
-export type responseDailyRecommend = Product[];
-export type responseFoodRecommend = Product[];
-export type responseHotDeal = Product[];
-export type responseSearch = Product[];
-export type responseCategorypage = CategoryPageType;
-export type responseProduct = Product;
+export type responseCategorypage = CategoryPage;

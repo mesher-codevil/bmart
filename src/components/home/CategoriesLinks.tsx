@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { CATEGORIESLINKS } from '@/constant/category';
-import styled from '@emotion/styled';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { CATEGORIES_LINKS } from "@/mock/category";
+import styled from "@emotion/styled";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ export function CategoriesLinks() {
   const onClickHandler = (id: number) => push(`/category?category_id=${id}`);
   return (
     <Wrapper>
-      {CATEGORIESLINKS.map((category, index) => (
+      {CATEGORIES_LINKS.map((category, index) => (
         <Image
           width={50}
           height={50}

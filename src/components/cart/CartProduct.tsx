@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { Product } from '@/@types';
-import { CheckContext } from '@/app/cart/page';
-import { CartContext } from '@/store/GlobalState';
-import { apiService } from '@/utils/api/api.service';
-import Image from 'next/image';
-import { useContext, useEffect, useState } from 'react';
+import { Product } from "@/types";
+
+import { CartContext } from "@/store/GlobalState";
+import { apiService } from "@/utils/api/api.service";
+import Image from "next/image";
+import { useContext, useEffect, useState } from "react";
 
 interface ICartProduct {
   id: number;
@@ -13,23 +13,23 @@ interface ICartProduct {
   isSelectAll: boolean;
 }
 export function CartProduct({ id, amount }: ICartProduct) {
-  const [cartState, changeCartState] = useContext(CartContext);
+  const { cartList: cartState, updateCartState } = useContext(CartContext);
 
   const [product, setProduct] = useState<Product>();
 
-  const increaseAmount = () => changeCartState({ id: id, amount: amount + 1 });
-  const decreaseAmount = () => changeCartState({ id: id, amount: amount - 1 });
-  const removeProduct = () => changeCartState({ id: id, amount: -1 });
+  const increaseAmount = () => updateCartState({ id: id, amount: amount + 1 });
+  const decreaseAmount = () => updateCartState({ id: id, amount: amount - 1 });
+  const removeProduct = () => updateCartState({ id: id, amount: -1 });
 
   const onClickHandler = () => {
     const isChecked = cartState.filter((item) => item.id === id)?.[0].isChecked;
-    changeCartState({ id: id, isChecked: !isChecked });
+    updateCartState({ id: id, isChecked: !isChecked });
   };
 
   const getProduct = async () => {
     const data = await apiService.getProduct(id);
     setProduct(data);
-    changeCartState({
+    updateCartState({
       id: id,
       price: data.price,
       discountedPrice: data.discountedPrice,

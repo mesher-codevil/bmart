@@ -1,22 +1,11 @@
-import {
-  responseCustomizeRecommend,
-  responseMainBanner,
-  responsePromotionBanner,
-  responseNewArrivalRecommend,
-  responseBestSellerRecommend,
-  responseDailyRecommend,
-  responseFoodRecommend,
-  responseHotDeal,
-  responseProduct,
-  responseSearch,
-} from './api.dto';
-import { IMockup, Mockup } from './api.mock';
-import { apiPath } from './api.path';
-import axios from 'axios';
-
+import { Product } from "@/types";
+import { responseMainBanner, responsePromotionBanner } from "./api.dto";
+import { IMockup, Mockup } from "./api.mock";
+import { apiPath } from "./api.path";
+import axios from "axios";
 class ApiService {
   private readonly axiosInstance = axios.create({
-    baseURL: '/',
+    baseURL: "/",
     timeout: 60000,
   });
   private getMockData(mockup: IMockup, endpoint: string) {
@@ -40,9 +29,9 @@ class ApiService {
     this.axiosInstance.interceptors.request.use(
       (request) => {
         const mock =
-          request.method === 'get'
-            ? this.getMockData(Mockup, request?.url || '')
-            : this.postMockData(Mockup, request?.url || '', request.data);
+          request.method === "get"
+            ? this.getMockData(Mockup, request?.url || "")
+            : this.postMockData(Mockup, request?.url || "", request.data);
         if (!mock) return request;
 
         return {
@@ -52,8 +41,8 @@ class ApiService {
               const res = {
                 data: mock,
                 status: 200,
-                statusText: 'OK',
-                headers: { 'content-type': 'text/plain; charset=utf-8' },
+                statusText: "OK",
+                headers: { "content-type": "text/plain; charset=utf-8" },
                 config,
                 request: {},
               };
@@ -77,39 +66,37 @@ class ApiService {
     return data;
   }
   public async getCustomizeRecommend() {
-    const { data } = await this.axiosInstance.get<responseCustomizeRecommend>(
+    const { data } = await this.axiosInstance.get<Product[]>(
       apiPath.CustomizeRecommend
     );
     return data;
   }
   public async getNewArrivalRecommend() {
-    const { data } = await this.axiosInstance.get<responseNewArrivalRecommend>(
+    const { data } = await this.axiosInstance.get<Product[]>(
       apiPath.NewArrivalRecommend
     );
     return data;
   }
   public async getBestSellerRecommend() {
-    const { data } = await this.axiosInstance.get<responseBestSellerRecommend>(
+    const { data } = await this.axiosInstance.get<Product[]>(
       apiPath.BestSellerRecommend
     );
     return data;
   }
   public async getDailyRecommend() {
-    const { data } = await this.axiosInstance.get<responseDailyRecommend>(
+    const { data } = await this.axiosInstance.get<Product[]>(
       apiPath.DailyRecommend
     );
     return data;
   }
   public async getFoodRecommend() {
-    const { data } = await this.axiosInstance.get<responseFoodRecommend>(
+    const { data } = await this.axiosInstance.get<Product[]>(
       apiPath.FoodRecommend
     );
     return data;
   }
   public async getHotDeal() {
-    const { data } = await this.axiosInstance.get<responseHotDeal>(
-      apiPath.HotDeal
-    );
+    const { data } = await this.axiosInstance.get<Product[]>(apiPath.HotDeal);
     return data;
   }
   public async getCategoryPage(id: string) {
@@ -117,15 +104,11 @@ class ApiService {
     return data;
   }
   public async getProduct(id: number) {
-    const { data } = await this.axiosInstance.get<responseProduct>(
-      `/product/${id}`
-    );
+    const { data } = await this.axiosInstance.get<Product>(`/product/${id}`);
     return data;
   }
   public async getSearch() {
-    const { data } = await this.axiosInstance.get<responseSearch>(
-      apiPath.Search
-    );
+    const { data } = await this.axiosInstance.get<Product[]>(apiPath.Search);
     return data;
   }
   public async postFavorite(n: number) {

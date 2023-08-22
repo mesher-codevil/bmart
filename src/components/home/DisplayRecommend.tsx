@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { Product } from '@/@types';
-import { ProductCard } from './ProductCard';
-import styled from '@emotion/styled';
+import { Product } from "@/types";
+import { ProductCard } from "./ProductCard";
+import styled from "@emotion/styled";
 
 interface IDisplayRecommendMenu {
   title: string;
   products: Product[];
-  type: 'row' | 'grid';
+  type: "row" | "grid";
 }
 
 const RowWrapper = styled.div`
@@ -22,7 +22,7 @@ const GridWrapper = styled.div`
 `;
 export function DisplayRecommend(props: IDisplayRecommendMenu) {
   const { title, products, type } = props;
-  const Wrapper = type === 'row' ? RowWrapper : GridWrapper;
+  const Wrapper = type === "row" ? RowWrapper : GridWrapper;
   return (
     <>
       <h2>{title}</h2>

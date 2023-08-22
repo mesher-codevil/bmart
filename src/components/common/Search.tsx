@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import styled from '@emotion/styled';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { SearchOpenContext } from '../../store/GlobalState';
-import Image from 'next/image';
-import Arrow from '@assets/arrow.svg';
-import { browserStore } from '@/store/BrowserStore';
-import { Product } from '@/@types';
-import { apiService } from '@/utils/api/api.service';
+import styled from "@emotion/styled";
+import { useContext, useEffect, useRef, useState } from "react";
+import { SearchOpenContext } from "../../store/GlobalState";
+import Image from "next/image";
+import Arrow from "@assets/arrow.svg";
+import { browserStore } from "@/store/BrowserStore";
+import { Product } from "@/types";
+import { apiService } from "@/utils/api/api.service";
 const Wrapper = styled.div`
   position: fixed;
   background-color: lightgray;
@@ -23,9 +23,9 @@ const SearchInput = styled.input`
 
 const RecentBoard = styled.ul``;
 export function Search(): React.ReactNode {
-  const [, setIsSearchOpen] = useContext(SearchOpenContext);
+  const { setIsSearchOpen } = useContext(SearchOpenContext);
 
-  const [currentKeyword, setCurrentKeyword] = useState('');
+  const [currentKeyword, setCurrentKeyword] = useState("");
   const [recentlySearched, setRecentlySearched] = useState<string[]>(
     browserStore.getRecentSearch()
   );
@@ -39,14 +39,14 @@ export function Search(): React.ReactNode {
   const search = () => {
     const isValidSearchKeyword =
       !$SearchInput?.current?.value ||
-      $SearchInput?.current?.value.trim() === '';
+      $SearchInput?.current?.value.trim() === "";
 
     if (isValidSearchKeyword) return;
     const keyword = $SearchInput?.current?.value;
     const addedList = browserStore.addRecentSearch(keyword);
     setCurrentKeyword(keyword);
     setRecentlySearched(addedList);
-    $SearchInput.current.value = '';
+    $SearchInput.current.value = "";
   };
   const removeKeyword = (keyword: string) => {
     const removedList = browserStore.removeSearch(keyword);
@@ -84,7 +84,7 @@ export function Search(): React.ReactNode {
           </li>
         ))}
       </RecentBoard>
-      <div>{searchResult.map((item) => item.name).join(', ')}</div>
+      <div>{searchResult.map((item) => item.name).join(", ")}</div>
       <button onClick={clearAllKeyword}>전체 삭제하기</button>
     </Wrapper>
   );

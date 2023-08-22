@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { DisplayRecommend } from './DisplayRecommend';
-import { Product } from '@/@types';
-import { apiService } from '@/utils/api/api.service';
-import styled from '@emotion/styled';
+import { useEffect, useState } from "react";
+import { DisplayRecommend } from "./DisplayRecommend";
+import { Product } from "@/types";
+import { apiService } from "@/utils/api/api.service";
+import styled from "@emotion/styled";
 
 const CUSTOMIZE_LIST_LENGTH = 9;
 const NEWARRIVAL_LIST_LENGTH = 20;
 const BESTSELLER_LIST_LENGTH = 20;
-const DAILY_LIST_LENGTH = 6;
+const DAILY_LIST_LENGTH = 24;
 const FOOD_LIST_LENGTH = 6;
 
 const RefetchButton = styled.button`
@@ -69,9 +69,9 @@ export function RecommendMenu() {
         products={dailyList}
         type="grid"
       />
-      <RefetchButton onClick={getDaily}>
+      {/* <RefetchButton onClick={getDaily}>
         지금 필요한 생필품! 다른 상품 보기
-      </RefetchButton>
+      </RefetchButton> */}
       <DisplayRecommend
         title="새로 나왔어요"
         products={newArrivalList}

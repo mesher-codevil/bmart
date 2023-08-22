@@ -1,9 +1,9 @@
-import { Product } from '@/@types';
-import { CartContext } from '@/store/GlobalState';
-import { getRate } from '@/utils';
-import styled from '@emotion/styled';
-import Image from 'next/image';
-import { useContext } from 'react';
+import { Product } from "@/types";
+import { CartContext } from "@/store/GlobalState";
+import { getRate } from "@/utils";
+import styled from "@emotion/styled";
+import Image from "next/image";
+import { useContext } from "react";
 
 interface IMDCard {
   product: Product;
@@ -26,7 +26,7 @@ const Cart = styled.span`
   border-radius: 5px;
 `;
 export function MDCard({ product }: IMDCard) {
-  const [, changeCartState] = useContext(CartContext);
+  const { updateCartState } = useContext(CartContext);
   return (
     <div>
       <Image
@@ -43,7 +43,7 @@ export function MDCard({ product }: IMDCard) {
       {product.discountedPrice && (
         <DiscountedPrice>{product.discountedPrice}</DiscountedPrice>
       )}
-      <Cart onClick={() => changeCartState({ id: product.id })}>
+      <Cart onClick={() => updateCartState({ id: product.id })}>
         장바구니 담기
       </Cart>
     </div>

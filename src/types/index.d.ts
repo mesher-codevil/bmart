@@ -9,22 +9,22 @@ export type Product = {
   popular: number;
 };
 
-export type SubcategoryType = {
+export type Subcategory = {
   name: string;
   id: number;
 };
-export type CategoryLinkType = {
+export type CategoryLink = {
   id: number;
   linkUrl: string;
   iconUrl: string;
   name: string;
-  subcategory: SubcategoryType[];
+  subcategory: Subcategory[];
 };
-export type CategoryLinksType = CategoryLinkType[];
-export type CategoryPageType = {
+export type CategoryLinks = CategoryLink[];
+export type CategoryPage = {
   name: string;
   products: number[];
-  subcategory?: SubcategoryType[];
+  subcategory?: Subcategory[];
 };
 
 export type CartListType = {
@@ -35,7 +35,7 @@ export type CartListType = {
   price: number;
 }[];
 
-export type IChangeCart = {
+export type ChangeCart = {
   id: number;
   discountedPrice?: number;
   price?: number;
@@ -43,7 +43,7 @@ export type IChangeCart = {
   isChecked?: boolean;
 };
 
-export interface IEditCart {
+export interface EditCart {
   isToggleFunction: boolean;
   id: number;
   multipledPrice: number;

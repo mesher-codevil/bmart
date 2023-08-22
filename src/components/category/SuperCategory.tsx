@@ -1,15 +1,15 @@
-'use client';
-import Image from 'next/image';
-import styled from '@emotion/styled';
-import { Header } from '@/components/common/Header';
-import Arrow from '@assets/arrow.svg';
-import { useContext, useEffect, useState } from 'react';
-import { apiService } from '@/utils/api/api.service';
-import { SubcategoryType } from '@/@types';
-import { useRouter } from 'next/navigation';
-import { DisplayRecommend } from '@/components/home/DisplayRecommend';
-import { CategoryProducts } from './CategoryProducts';
-import { SearchOpenContext, SidebarOpenContext } from '@/store/GlobalState';
+"use client";
+import Image from "next/image";
+import styled from "@emotion/styled";
+import { Header } from "@/components/common/Header";
+import Arrow from "@assets/arrow.svg";
+import { useContext, useEffect, useState } from "react";
+import { apiService } from "@/utils/api/api.service";
+import { Subcategory } from "@/types";
+import { useRouter } from "next/navigation";
+import { DisplayRecommend } from "@/components/home/DisplayRecommend";
+import { CategoryProducts } from "./CategoryProducts";
+import { SearchOpenContext, SidebarOpenContext } from "@/store/GlobalState";
 const Wrapper = styled.div`
   margin-top: 30px;
 `;
@@ -32,12 +32,12 @@ const SubCategoryLink = styled.li`
   box-sizing: border-box;
 `;
 export function SuperCategory({ id }: ISuperCategory) {
-  const [, setIsSearchOpen] = useContext(SearchOpenContext);
-  const [, setIsSidebarOpen] = useContext(SidebarOpenContext);
+  const { setIsSearchOpen } = useContext(SearchOpenContext);
+  const { setIsSidebarOpen } = useContext(SidebarOpenContext);
   const openSearch = () => setIsSearchOpen(true);
   const openSidebar = () => setIsSidebarOpen(true);
   const [category, setCategory] = useState({
-    name: '',
+    name: "",
     subcategory: [],
     recommend: [],
     products: [],
@@ -46,7 +46,7 @@ export function SuperCategory({ id }: ISuperCategory) {
 
   const goToSubcategory = (id: number) => push(`/category?category_id=${id}`);
   const getSubcategory = async () => {
-    const data = await apiService.getCategoryPage(id || '0');
+    const data = await apiService.getCategoryPage(id || "0");
     setCategory(data);
   };
   useEffect(() => {
@@ -66,7 +66,7 @@ export function SuperCategory({ id }: ISuperCategory) {
       {category.subcategory && (
         <>
           <Navigator>
-            {category.subcategory.map((sub: SubcategoryType, index: number) => (
+            {category.subcategory.map((sub: Subcategory, index: number) => (
               <SubCategoryLink
                 key={index}
                 onClick={() => goToSubcategory(sub.id)}

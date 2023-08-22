@@ -1,20 +1,20 @@
-'use client';
-import Image from 'next/image';
-import styled from '@emotion/styled';
-import { Header } from '@common/Header';
-import Arrow from '@assets/arrow.svg';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { SidebarOpenContext, SearchOpenContext } from '../store/GlobalState';
-import { MainBanner } from '@/components/home/MainBanner';
-import { CategoriesLinks } from '@/components/home/CategoriesLinks';
-import { RecommendMenu } from '@/components/home/RecommendMenu';
-import { MD } from '@/components/home/MD';
-import { HotDeal } from '@/components/home/HotDeal';
-import { PromotionBanner } from '@/components/home/PromotionBanner';
-import Spinner from '@/components/common/svg/Spinner';
+"use client";
+import Image from "next/image";
+import styled from "@emotion/styled";
+import { Header } from "@common/Header";
+import Arrow from "@assets/arrow.svg";
+import { useContext, useEffect, useRef, useState } from "react";
+import { SidebarOpenContext, SearchOpenContext } from "../store/GlobalState";
+import { MainBanner } from "@/components/home/MainBanner";
+import { CategoriesLinks } from "@/components/home/CategoriesLinks";
+import { RecommendMenu } from "@/components/home/RecommendMenu";
+import { MD } from "@/components/home/MD";
+import { HotDeal } from "@/components/home/HotDeal";
+import { PromotionBanner } from "@/components/home/PromotionBanner";
+import Spinner from "@/components/common/svg/Spinner";
 
 const HOME = {
-  HEADER_TITLE: 'B마트',
+  HEADER_TITLE: "B마트",
 };
 const Main = styled.div`
   &>: nth-child(2) {
@@ -22,8 +22,8 @@ const Main = styled.div`
   }
 `;
 export default function Home(): React.ReactNode {
-  const [, setIsSearchOpen] = useContext(SearchOpenContext);
-  const [, setIsSidebarOpen] = useContext(SidebarOpenContext);
+  const { setIsSearchOpen } = useContext(SearchOpenContext);
+  const { setIsSidebarOpen } = useContext(SidebarOpenContext);
 
   const [isPullMeUp, setIsPullMeUp] = useState<boolean>(false);
 

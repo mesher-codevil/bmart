@@ -1,10 +1,10 @@
-import { Product } from '@/@types';
-import { CartContext } from '@/store/GlobalState';
-import { getRate } from '@/utils';
-import { apiService } from '@/utils/api/api.service';
-import styled from '@emotion/styled';
-import Image from 'next/image';
-import { useContext, useEffect, useState } from 'react';
+import { Product } from "@/types";
+import { CartContext } from "@/store/GlobalState";
+import { getRate } from "@/utils";
+import { apiService } from "@/utils/api/api.service";
+import styled from "@emotion/styled";
+import Image from "next/image";
+import { useContext, useEffect, useState } from "react";
 
 const HOTDEAL_PRODUCTS_LENGTH = 4;
 
@@ -30,7 +30,7 @@ export function HotDeal() {
   const [zoomedIndex, setZoomedIndex] = useState<number>(0);
   const selectedProduct = products[zoomedIndex];
 
-  const [, changeCartState] = useContext(CartContext);
+  const { updateCartState } = useContext(CartContext);
 
   const getProducts = async () => {
     const data = await apiService.getHotDeal();
@@ -71,7 +71,7 @@ export function HotDeal() {
           {selectedProduct.discountedPrice && (
             <DiscountedPrice>{selectedProduct.discountedPrice}</DiscountedPrice>
           )}
-          <Cart onClick={() => changeCartState({ id: selectedProduct.id })}>
+          <Cart onClick={() => updateCartState({ id: selectedProduct.id })}>
             장바구니 담기
           </Cart>
         </div>

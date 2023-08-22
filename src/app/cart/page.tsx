@@ -1,17 +1,13 @@
-'use client';
+"use client";
 
-import { IEditCart } from '@/@types';
-import { CartProduct } from '@/components/cart/CartProduct';
-import { Header } from '@/components/common/Header';
-import { CartContext } from '@/store/GlobalState';
-import styled from '@emotion/styled';
-import Image from 'next/image';
-import { createContext, useContext, useEffect, useState } from 'react';
-import Arrow from '@assets/arrow.svg';
-import { useRouter } from 'next/navigation';
-export const CheckContext = createContext<
-  [IEditCart[], (props: IEditCart) => void]
->([[], () => null]);
+import { CartProduct } from "@/components/cart/CartProduct";
+import { Header } from "@/components/common/Header";
+import { CartContext } from "@/store/GlobalState";
+import styled from "@emotion/styled";
+import Image from "next/image";
+import { useContext, useEffect, useState } from "react";
+import Arrow from "@assets/arrow.svg";
+import { useRouter } from "next/navigation";
 
 const BuyCartButton = styled.div`
   position: fixed;
@@ -38,7 +34,7 @@ const Wrapper = styled.div`
   padding-top: 50px;
 `;
 export default function Cart() {
-  const [cartList, _, clearChecked, toggleAll] = useContext(CartContext);
+  const { cartList, clearChecked, toggleAll } = useContext(CartContext);
   const [isSelectAll, setisSelectAll] = useState(false);
 
   const { back } = useRouter();
@@ -50,6 +46,12 @@ export default function Cart() {
   };
 
   const backtoPreviousPage = () => back();
+
+  const totalPrice = cartList.reduce(
+    (acc, { isChecked, amount, discountedPrice, price }) =>
+      acc + (isChecked ? amount * (discountedPrice || price) : 0),
+    0
+  );
 
   useEffect(() => {
     toggleAll(isSelectAll);
@@ -65,7 +67,7 @@ export default function Cart() {
         </Header>
         <div>
           <div onClick={() => setisSelectAll(!isSelectAll)}>
-            {isSelectAll ? '선택 해제' : '모두 선택하기'}
+            {isSelectAll ? "선택 해제" : "모두 선택하기"}
           </div>
           <div onClick={removeCheckedItem}>선택 비우기</div>
         </div>
@@ -82,12 +84,7 @@ export default function Cart() {
         </div>
         <BuyCartButton>
           <span>{cartList.length}</span>
-          {cartList.reduce(
-            (acc, { isChecked, amount, discountedPrice, price }) =>
-              acc + (isChecked ? amount * (discountedPrice || price) : 0),
-            0
-          )}
-          주문하기
+          {totalPrice} 주문하기
         </BuyCartButton>
       </div>
     </Wrapper>

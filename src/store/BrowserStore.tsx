@@ -1,17 +1,20 @@
-import { CartListType } from '@/@types';
-import { hasWindow } from '@/utils';
+import { CartListType } from "@/types";
+import { hasWindow, parse } from "@/utils";
 
 const STORE_KEY = {
-  RECENT_SEARCH: 'recent-search',
-  CART: 'cart',
+  RECENT_SEARCH: "recent-search",
+  CART: "cart",
 };
+
+const DEFAULT_LOCALSTORAGE_STRING = "[]";
+const DEFAULT_SESSIONSTORAGE_STRING = "[]";
 
 class BrowserStore {
   //localstorage
   private getLocalStorage(key: string) {
     if (!hasWindow()) return [];
     const localStorageValue = localStorage.getItem(key);
-    return JSON.parse(localStorageValue || '[]');
+    return parse(localStorageValue || DEFAULT_LOCALSTORAGE_STRING);
   }
 
   private setLocalStorage(key: string, value: any) {
@@ -50,7 +53,7 @@ class BrowserStore {
   private getSessionStorage(key: string) {
     if (!hasWindow()) return [];
     const sessionStorageValue = sessionStorage.getItem(key);
-    return JSON.parse(sessionStorageValue || '[]');
+    return parse(sessionStorageValue || DEFAULT_SESSIONSTORAGE_STRING);
   }
   private setSessionStorage(key: string, value: any) {
     sessionStorage.setItem(key, JSON.stringify(value));

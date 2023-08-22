@@ -1,11 +1,11 @@
-'use client';
-import styled from '@emotion/styled';
-import { useContext } from 'react';
-import { SidebarOpenContext } from '../../store/GlobalState';
-import { CategoryLinkType, SubcategoryType } from '@/@types';
-import Image from 'next/image';
-import Arrow from '@assets/arrow.svg';
-import { CATEGORIESLINKS } from '@/constant/category';
+"use client";
+import styled from "@emotion/styled";
+import { useContext } from "react";
+import { SidebarOpenContext } from "../../store/GlobalState";
+import { CategoryLink, Subcategory } from "@/types";
+import Image from "next/image";
+import Arrow from "@assets/arrow.svg";
+import { CATEGORIES_LINKS } from "@/mock/category";
 
 const Wrapper = styled.div`
   @keyframes sliding {
@@ -31,19 +31,19 @@ const CategoryWrapper = styled.ul`
   margin: 0;
 `;
 export function Sidebar(): React.ReactNode {
-  const [isSidebarOpen, setIsSidebarOpen] = useContext(SidebarOpenContext);
+  const { isSidebarOpen, setIsSidebarOpen } = useContext(SidebarOpenContext);
   const closeSidebar = () => setIsSidebarOpen(false);
 
   return (
     <Wrapper>
       <Image src={Arrow} alt="back to page" onClick={closeSidebar} />
       <CategoriesWrapper>
-        {CATEGORIESLINKS.map((category: CategoryLinkType, index: number) => (
+        {CATEGORIES_LINKS.map((category: CategoryLink, index: number) => (
           <CategoryWrapper key={index}>
             <details>
               <summary>{category.name}</summary>
               {category.subcategory.map(
-                (subcategory: SubcategoryType, index: number) => (
+                (subcategory: Subcategory, index: number) => (
                   <li key={index}>{subcategory.name}</li>
                 )
               )}

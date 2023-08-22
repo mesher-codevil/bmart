@@ -1,5 +1,5 @@
-import { CATEGORIESLINKS } from '@/constant/category';
-import styled from '@emotion/styled';
+import { CATEGORIES_LINKS } from "@/mock/category";
+import styled from "@emotion/styled";
 
 const SelectedIndicator = styled.span`
   background-color: black;
@@ -15,6 +15,9 @@ export function MDIndicator(
 ) {
   const Indicator = isSelected ? SelectedIndicator : UnSelectedIndicator;
   return (
-    <Indicator onClick={clickHandler}> {CATEGORIESLINKS[index].name}</Indicator>
+    <Indicator onClick={clickHandler}>
+      {" "}
+      {CATEGORIES_LINKS[index].name}
+    </Indicator>
   );
 }

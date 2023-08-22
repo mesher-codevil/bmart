@@ -1,8 +1,8 @@
-'use client';
-import { CartListType, IChangeCart } from '@/@types';
-import { apiService } from '@/utils/api/api.service';
-import styled from '@emotion/styled';
-import { useRouter } from 'next/navigation';
+"use client";
+import { CartListType, ChangeCart } from "@/types";
+import { apiService } from "@/utils/api/api.service";
+import styled from "@emotion/styled";
+import { useRouter } from "next/navigation";
 import {
   createContext,
   useState,
@@ -10,17 +10,14 @@ import {
   SetStateAction,
   useEffect,
   ReactNode,
-} from 'react';
-import { browserStore } from './BrowserStore';
+} from "react";
+import { browserStore } from "./BrowserStore";
 interface IGlobalContext {
   children: React.ReactNode;
 }
 
-type booleanStateType = [boolean, Dispatch<SetStateAction<boolean>>];
-
 const INITIALIZE_POST_FAVORITE_NUMBER = -1;
 const DEFAULT_DISPATCH = () => null;
-const DEFAULT_BOOLEAN_STATE: booleanStateType = [false, DEFAULT_DISPATCH];
 
 const CartButton = styled.div`
   position: fixed;
@@ -31,26 +28,35 @@ const CartButton = styled.div`
   padding: 10px;
 `;
 
-export const FavoriteContext = createContext<
-  [number[], Dispatch<SetStateAction<number[]>>]
->([[], DEFAULT_DISPATCH]);
+export const FavoriteContext = createContext<{
+  favoriteList: number[];
+  setFavoriteList: Dispatch<SetStateAction<number[]>>;
+}>({
+  favoriteList: [],
+  setFavoriteList: DEFAULT_DISPATCH,
+});
 
-export const CartContext = createContext<
-  [
-    CartListType,
-    (props: IChangeCart) => void,
-    (ids: number[]) => void,
-    (state: boolean) => void,
-  ]
->([[], DEFAULT_DISPATCH, DEFAULT_DISPATCH, DEFAULT_DISPATCH]);
+export const CartContext = createContext<{
+  cartList: CartListType;
+  updateCartState: (props: ChangeCart) => void;
+  clearChecked: (ids: number[]) => void;
+  toggleAll: (state: boolean) => void;
+}>({
+  cartList: [],
+  updateCartState: DEFAULT_DISPATCH,
+  clearChecked: DEFAULT_DISPATCH,
+  toggleAll: DEFAULT_DISPATCH,
+});
 
-export const SidebarOpenContext = createContext<
-  [boolean, Dispatch<SetStateAction<boolean>>]
->(DEFAULT_BOOLEAN_STATE);
+export const SidebarOpenContext = createContext<{
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
+}>({ isSidebarOpen: false, setIsSidebarOpen: DEFAULT_DISPATCH });
 
-export const SearchOpenContext = createContext<
-  [boolean, Dispatch<SetStateAction<boolean>>]
->(DEFAULT_BOOLEAN_STATE);
+export const SearchOpenContext = createContext<{
+  isSearchOpen: boolean;
+  setIsSearchOpen: Dispatch<SetStateAction<boolean>>;
+}>({ isSearchOpen: false, setIsSearchOpen: DEFAULT_DISPATCH });
 
 export function GlobalStateContext({ children }: IGlobalContext): ReactNode {
   const [cartList, setCartList] = useState<CartListType>([]);
@@ -59,8 +65,13 @@ export function GlobalStateContext({ children }: IGlobalContext): ReactNode {
   const [favoriteList, setFavoriteList] = useState<number[]>([]);
 
   const { push } = useRouter();
+  try {
+    fetch("/");
+  } catch (err) {
+    console.log(err);
+  }
 
-  const changeCartState = (props: IChangeCart) => {
+  const updateCartState = (props: ChangeCart) => {
     const { id, price, isChecked, amount, discountedPrice } = props;
     const selectedIndex = cartList.findIndex((item) => item.id === id);
     if (selectedIndex === -1)
@@ -78,14 +89,14 @@ export function GlobalStateContext({ children }: IGlobalContext): ReactNode {
       return setCartList([...cartList.filter((item) => item.id !== id)]);
 
     const currentCart = cartList[selectedIndex];
-    const isCheckedExist = isChecked !== undefined;
+    const isChangingCheck = isChecked !== undefined;
 
     return setCartList([
       ...cartList.slice(0, selectedIndex),
       {
         id: currentCart.id,
-        amount: amount || currentCart.amount + (isCheckedExist ? 0 : 1),
-        isChecked: isCheckedExist ? isChecked : currentCart.isChecked,
+        amount: amount || currentCart.amount + (isChangingCheck ? 0 : 1),
+        isChecked: isChangingCheck ? isChecked : currentCart.isChecked,
         price: price || currentCart.price,
         discountedPrice: discountedPrice || currentCart.discountedPrice,
       },
@@ -113,15 +124,17 @@ export function GlobalStateContext({ children }: IGlobalContext): ReactNode {
     browserStore.setCartList(cartList);
   }, [cartList]);
   return (
-    <FavoriteContext.Provider value={[favoriteList, setFavoriteList]}>
+    <FavoriteContext.Provider value={{ favoriteList, setFavoriteList }}>
       <CartContext.Provider
-        value={[cartList, changeCartState, clearChecked, toggleAll]}
+        value={{ cartList, updateCartState, clearChecked, toggleAll }}
       >
-        <SidebarOpenContext.Provider value={[isSidebarOpen, setIsSidebarOpen]}>
-          <SearchOpenContext.Provider value={[isSearchOpen, setIsSearchOpen]}>
+        <SidebarOpenContext.Provider
+          value={{ isSidebarOpen, setIsSidebarOpen }}
+        >
+          <SearchOpenContext.Provider value={{ isSearchOpen, setIsSearchOpen }}>
             <main>
               {children}
-              <CartButton onClick={() => push('/cart')}>
+              <CartButton onClick={() => push("/cart")}>
                 {cartList.length}
               </CartButton>
             </main>

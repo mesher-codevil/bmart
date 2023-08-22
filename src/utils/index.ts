@@ -1,8 +1,8 @@
-import { CATEGORIESLINKS } from '@/constant/category';
+import { CATEGORIES_LINKS } from "@/mock/category";
 
 const pickNumber = (n: number): number => Math.floor(Math.random() * n);
 
-export const hasWindow = (): boolean => !(typeof window === 'undefined');
+export const hasWindow = () => !(typeof window === "undefined");
 
 export const shuffleArray = (array: any[]): number[] => {
   const maxLength = array.length;
@@ -11,12 +11,12 @@ export const shuffleArray = (array: any[]): number[] => {
 
 export const findCategoryName = (
   id: string | null
-): 'category' | 'subcategory' | undefined => {
+): "category" | "subcategory" | undefined => {
   if (id === null) return undefined;
-  for (const category of CATEGORIESLINKS) {
-    if (String(category.id) === id) return 'category';
+  for (const category of CATEGORIES_LINKS) {
+    if (String(category.id) === id) return "category";
     for (const subcategory of category.subcategory) {
-      if (String(subcategory.id) === id) return 'subcategory';
+      if (String(subcategory.id) === id) return "subcategory";
     }
   }
   return undefined;
@@ -28,4 +28,12 @@ export const getRate = (
 ): number => {
   if (!discountedPrice) return 0;
   return (price - discountedPrice) / price;
+};
+
+export const parse = (stringifiedJSON: string, defaultJSONString?: string) => {
+  try {
+    return JSON.parse(stringifiedJSON);
+  } catch (err) {
+    return JSON.parse(defaultJSONString || "[]");
+  }
 };

@@ -1,17 +1,17 @@
-'use client';
-import { CategoryPageType } from '@/@types';
-import { apiService } from '@/utils/api/api.service';
-import { useEffect, useState } from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import { MDIndicator } from './MDIndicator';
-import styled from '@emotion/styled';
+"use client";
+import { CategoryPage } from "@/types";
+import { apiService } from "@/utils/api/api.service";
+import { useEffect, useState } from "react";
+import { Carousel } from "react-responsive-carousel";
+import { MDIndicator } from "./MDIndicator";
+import styled from "@emotion/styled";
 
 const CarouselItem = styled.div`
   height: 500px;
 `;
 
 export function MD() {
-  const [products, setProducts] = useState<CategoryPageType[]>([]);
+  const [products, setProducts] = useState<CategoryPage[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const getProducts = async () => {
     const data = await apiService.getCategoryPage(String(currentPage));
